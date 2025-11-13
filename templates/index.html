@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="card">
+  <h2>Foglalj időpontot</h2>
+  <div class="form-row">
+    <label for="service">Szolgáltatás</label>
+    <select id="service"></select>
+  </div>
+  <div class="form-row">
+    <label for="stylist">Fodrász</label>
+    <select id="stylist"></select>
+  </div>
+  <div class="form-row">
+    <label for="date">Dátum</label>
+    <input id="date" type="date" />
+  </div>
+  <div id="slots" class="slots"></div>
+  <div class="card small">
+    <input id="name" placeholder="Név" />
+    <input id="phone" placeholder="Telefonszám" />
+    <input id="email" placeholder="Email (opcionális)" />
+    <button id="confirm" class="primary">Foglalás</button>
+  </div>
+</section>
+<script>
+const servicesData = {{ services|tojson }};
+const stylistsData = {{ stylists|tojson }};
+document.addEventListener('DOMContentLoaded', ()=>{
+  const serviceSel = document.getElementById('service');
+  const stylistSel = document.getElementById('stylist');
+  servicesData.forEach(s=>{ const o = document.createElement('option'); o.value=s.id; o.textContent=`${s.name} (${s.duration_minutes} perc)`; serviceSel.appendChild(o)});
+  stylistsData.forEach(s=>{ const o = document.createElement('option'); o.value=s.id; o.textContent=s.name; stylistSel.appendChild(o)});
+  const dateInput = document.getElementById('date');
+  const slotsDiv = document.getElementById('slots');
+  async function loadSlots(){
+    if(!dateInput.value) return;
+    const res = await fetch(`/api/availability?stylist=${stylistSel.value}&date=${dateInput.value}&service=${serviceSel.value}`);
+    const data = await res.json();
+    slotsDiv.innerHTML='';
+    data.slots.forEach(s=>{
+      const d = new Date(s.start);
+      const btn = document.createElement('button');
+      btn.className='slot';
+      btn.textContent = d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+      btn.disabled = !s.free;
+      if(s.free){
+        btn.addEventListener('click', ()=>{
+          document.querySelectorAll('.slot.selected').forEach(x=>x.classList.remove('selected'));
+          btn.classList.add('selected');
+          btn.dataset.start = s.start;
+        })
+      }
+      slotsDiv.appendChild(btn);
+    });
+  }
+  dateInput.addEventListener('change', loadSlots);
+  serviceSel.addEventListener('change', loadSlots);
+  stylistSel.addEventListener('change', loadSlots);
+  document.getElementById('confirm').addEventListener('click', async ()=>{
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const selected = document.querySelector('.slot.selected');
+    if(!name || !phone || !selected){ alert('Kérlek töltsd ki a nevet, telefonszámot és válassz időpontot.'); return; }
+    const payload = { name, phone, email, stylist: stylistSel.value, service: serviceSel.value, start: selected.dataset.start };
+    const res = await fetch('/book', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+    const data = await res.json();
+    if(data.ok){ alert('Foglalás sikeres!'); window.location.href='/'; } else { alert('Hiba történt.'); }
+  });
+})
+</script>
+{% endblock %}
