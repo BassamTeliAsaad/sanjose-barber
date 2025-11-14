@@ -8,3 +8,4 @@ SMTP_USER = os.environ.get('SMTP_USER') or ''
 SMTP_PASS = os.environ.get('SMTP_PASS') or ''
 FROM_EMAIL = os.environ.get('FROM_EMAIL') or SMTP_USER
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL') or ''
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD') or 'barberadmin123'

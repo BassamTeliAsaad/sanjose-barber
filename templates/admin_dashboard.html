@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Foglalások</h2>
+{% for item in bookings %}
+  {% set b = item.b %}
+  <div class="card fade-in">
+    <p><strong>Név:</strong> {{ b.client_name }}</p>
+    <p><strong>Telefon:</strong> {{ b.client_phone }}</p>
+    <p><strong>Szolgáltatás:</strong> {{ item.service_name }}</p>
+    <p><strong>Fodrász:</strong> {{ item.stylist_name }}</p>
+    <p><strong>Dátum:</strong> {{ b.start_datetime }}</p>
+    <form method="post" action="{{ url_for('admin_delete', bid=b.id) }}" onsubmit="return confirm('Biztos törlöd?');"><button class="danger">Törlés</button></form>
+  </div>
+{% else %}
+  <p>Nincsenek foglalások.</p>
+{% endfor %}
+{% endblock %}
