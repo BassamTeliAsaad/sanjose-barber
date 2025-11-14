@@ -1,35 +1,33 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Admin - Foglalások & Beállítások</h2>
-<div class="grid">
-  <div>
-    <h3>Foglalások</h3>
-    {% for b in bookings %}
-      <div class="card">
-        <p><strong>{{ b.client_name }}</strong></p>
-        <p>{{ b.start_datetime }}</p>
-        <p>Szolg.: {{ b.service_id }} | Fodr.: {{ b.stylist_id }}</p>
-        <form method="post" action="/admin/booking/delete/{{ b.id }}" onsubmit="return confirm('Töröl?');"><button class="danger">Törlés</button></form>
-      </div>
-    {% else %}
-      <p>Nincsenek foglalások.</p>
-    {% endfor %}
-  </div>
-  <div>
-    <h3>Szolgáltatások</h3>
-    <form method="post" action="/admin/service/add" class="stack">
-      <input name="name" placeholder="Szolgáltatás" required />
-      <div class="row"><input name="duration" type="number" value="30" /> <input name="price" type="number" value="0" /></div>
-      <button class="secondary">Hozzáadás</button>
-    </form>
-    <ul>{% for sv in services %}<li>{{ sv.name }} — {{ sv.duration_minutes }} min — {{ sv.price }} Ft</li>{% endfor %}</ul>
-    <h3>Fodrászok</h3>
-    <form method="post" action="/admin/stylist/add" class="stack">
-      <input name="name" placeholder="Név" required />
-      <div class="row"><input name="start_hour" type="number" value="9" /> <input name="end_hour" type="number" value="17" /></div>
-      <button class="secondary">Hozzáadás</button>
-    </form>
-    <ul>{% for st in stylists %}<li>{{ st.name }} ({{ st.start_hour }}-{{ st.end_hour }})</li>{% endfor %}</ul>
-  </div>
+<h2>Admin</h2>
+<div class="card">
+  <h3>Foglalasok</h3>
+  {% for b in bookings %}
+    <div style="padding:10px;border-bottom:1px solid #eee">
+      <strong>{{ b.client_name }}</strong> - {{ b.start_datetime }} - szolg: {{ b.service_id }} - fodr: {{ b.stylist_id }}
+      <form method="post" action="/admin/booking/delete/{{ b.id }}" style="display:inline"><button class="danger">Torles</button></form>
+    </div>
+  {% else %}
+    <p>Nincsenek foglalasok.</p>
+  {% endfor %}
+</div>
+<div class="card">
+  <h3>Szolgaltatasok</h3>
+  <form method="post" action="/admin/service/add">
+    <input name="name" placeholder="Nev" required>
+    <input name="duration" type="number" placeholder="Perc" required>
+    <input name="price" type="number" placeholder="Ar" required>
+    <button class="primary">Hozzaadas</button>
+  </form>
+</div>
+<div class="card">
+  <h3>Fodraszok</h3>
+  <form method="post" action="/admin/stylist/add">
+    <input name="name" placeholder="Nev" required>
+    <input name="start_hour" type="number" value="9">
+    <input name="end_hour" type="number" value="17">
+    <button class="primary">Hozzaadas</button>
+  </form>
 </div>
 {% endblock %}

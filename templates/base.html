@@ -7,12 +7,9 @@
   <link rel="stylesheet" href="/static/css/style.css">
   <script src="https://unpkg.com/feather-icons"></script>
 </head>
-<body class="theme-light">
-  <header class="app-header"><div class="brand">San Jose Barber</div>
-    <nav><a href="/" class="nav-link">Foglalás</a><a href="/admin/login" class="nav-link">Admin</a>
-    <button id="themeToggle" class="icon-btn" title="Sötét/Világos"><i data-feather="moon"></i></button>
-    </nav></header>
-  <main class="container">{% block content %}{% endblock %}</main>
+<body class="light">
+  <header class="navbar"><div>San Jose Barber</div><div style="display:flex;gap:12px;align-items:center"><a href="/admin/login">Admin</a><img src="/static/icons/moon.svg" id="themeToggle" class="theme-toggle" alt="theme"></div></header>
+  <main class="page">{% block content %}{% endblock %}</main>
   <script>feather.replace()</script>
   <script src="/static/js/main.js"></script>
 </body>

@@ -1,11 +1,12 @@
-// theme toggle (dark/light) persisted in localStorage
-const btn = document.getElementById('themeToggle');
-if(btn){
-  const setTheme = (dark)=>{
-    document.body.classList.toggle('theme-dark', dark);
-    localStorage.setItem('sjb_theme_dark', dark ? '1' : '0');
-  };
-  const pref = localStorage.getItem('sjb_theme_dark');
-  setTheme(pref === '1');
-  btn.addEventListener('click', ()=> setTheme(!document.body.classList.contains('theme-dark')) );
+// theme toggle
+const themeToggle = document.getElementById('themeToggle');
+if(themeToggle){
+  const apply = (t)=> document.documentElement.classList.toggle('dark', t==='dark');
+  const stored = localStorage.getItem('sjb_theme') || 'light';
+  apply(stored);
+  themeToggle.addEventListener('click', ()=>{
+    const now = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+    localStorage.setItem('sjb_theme', now);
+    apply(now);
+  });
 }

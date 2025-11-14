@@ -10,4 +10,3 @@ FROM_EMAIL = os.environ.get('FROM_EMAIL') or SMTP_USER
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL') or ''
 ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD') or 'barberadmin123'
 GCAL_ENABLED = os.environ.get('GCAL_ENABLED') == '1'
-# For Google Calendar integration, place credentials.json in project or set up service account env vars
