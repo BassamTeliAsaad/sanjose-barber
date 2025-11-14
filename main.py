@@ -1,4 +1,6 @@
 from app import app
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
-    
+
+# Render indítási pontja
+if __name__ == "__main__":
+    # Render NEM szereti a debug módot → kapcsold ki
+    app.run(host="0.0.0.0", port=10000)
