@@ -1,13 +1,17 @@
-San Jose Barber - teljes csomag (mobil UI, admin jelszóval, email hook)
+San Jose Barber - Full feature package
 
-Telepítés (local):
-1. python -m venv venv
-2. source venv/bin/activate  (Windows: venv\Scripts\activate)
-3. pip install -r requirements.txt
-4. python main.py
+Includes:
+- Mobile-first app-style UI
+- Calendar-based slot selection
+- Admin with password protection (env var ADMIN_PASSWORD)
+- Email notifications (configure SMTP_USER and SMTP_PASS)
+- Conflict checking on booking
+- Dark / Light toggle (client-side)
+- Google Calendar integration: placeholder hook (GCAL_ENABLED env var)
+- Compatible with Render (use gunicorn main:app)
 
-Deploy Render:
-- push to GitHub, then create Web Service on Render
-- Build command: pip install -r requirements.txt
-- Start command: gunicorn main:app
-- In Render env vars set SMTP_USER, SMTP_PASS, ADMIN_EMAIL, SECRET_KEY (opcionális ADMIN_PASSWORD)
+Quick local run:
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+python main.py
