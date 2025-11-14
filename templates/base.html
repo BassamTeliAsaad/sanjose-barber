@@ -1,18 +1,1 @@
-<!doctype html>
-<html lang="hu">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1,viewport-fit=cover">
-  <title>{{ title or 'San Jose Barber' }}</title>
-  <link rel="stylesheet" href="/static/css/style.css">
-  <script src="https://unpkg.com/feather-icons"></script>
-</head>
-<body>
-  <div class="app-shell">
-    <header class="app-header"><div class="brand">San Jose Barber</div><nav><a href="/" class="nav-link">Foglalás</a><a href="/admin/login" class="nav-link">Admin</a></nav></header>
-    <main class="app-main container">{% block content %}{% endblock %}</main>
-  </div>
-  <script>feather.replace()</script>
-  <script src="/static/js/main.js"></script>
-</body>
-</html>
+<html><head><link rel='stylesheet' href='/static/style.css'></head><body>{% block content %}{% endblock %}</body></html>
